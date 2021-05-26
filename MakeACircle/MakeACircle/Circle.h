@@ -72,24 +72,6 @@ public:
 	}
 
 
-	//can't get this function to work... I'm doing something wrong here.
-
-	/*void changeColour(int red, int green, int blue, int alpha)
-	{
-		for (int r = red; r <= 254; r++)
-		{
-			for (int g = green; g <= 254; g++)
-			{
-				for (int b = blue; b <= 254; b++)
-				{
-					SDL_SetRenderDrawColor(renderer, red, green, blue, alpha);
-				}
-			}
-
-		}
-	}*/
-
-
 private:
 	int height;
 	int width;
