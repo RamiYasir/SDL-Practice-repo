@@ -47,32 +47,9 @@ private:
 
 public:
 	SDL_Renderer* renderer = nullptr;
-
-	//I think what's happening is that the Circle class is calling Framework constructor, which sets SDL_Window* window and renderer to nullptr, getting rid of the window. 
-
-
-	//use midpoint circle algorithm to draw a circle to the screen
 };
 
 
 
 
 #endif
-
-
-//can't get this function to work... I'm doing something wrong here.
-
-		/*void changeColour(int red, int green, int blue, int alpha)
-		{
-			for (int r = red; r <= 254; r++)
-			{
-				for (int g = green; g <= 254; g++)
-				{
-					for (int b = blue; b <= 254; b++)
-					{
-						SDL_SetRenderDrawColor(renderer, red, green, blue, alpha);
-					}
-				}
-
-			}
-		}*/
