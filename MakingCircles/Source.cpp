@@ -6,39 +6,64 @@
 
 int main(int argc, char* argv[])
 {
+	//seed rng
 	std::srand(static_cast<unsigned int>(std::time(nullptr)));
 
-	static int circleCounter{ 0 };
-
+	//initialise framework
 	Framework fw(640, 640);
-	//fw.drawCircle(fw.getRandomNumber(10, 630), fw.getRandomNumber(10, 630), fw.getRandomNumber(20, 200));
-
 	
+	//initialise event
 	SDL_Event ev;
+
+	//game looop bool
 	bool isRunning = true;
 
 	//game loop
 	while (isRunning)
 	{
 
-		while (SDL_PollEvent(&ev) != 0)
-		{
+		//max circle objects that can be displayed onscreen
+		bool maxCirclesDisplayed = false;
+		Circle circles[20];
 
-			if (ev.type == SDL_QUIT)
-				isRunning = false;
-		}
-
-		if (circleCounter < 15) {
-			Circle circle(fw.getRandomNumber(10, 630), fw.getRandomNumber(10, 630), fw.getRandomNumber(20, 200));
+		//draw circle objects onto screen
+		for (int i = 0; i < 20; i++) {
+			circles[i].setSizeOfCircle(fw);
 			SDL_Delay(fw.getRandomNumber(100, 1000));
-			circle.drawCircle(fw);
-			circleCounter++;
+			circles[i].drawCircle(fw, maxCirclesDisplayed);
+
+			while (SDL_PollEvent(&ev) != 0)						//ugly that this is here and repeated twice...
+			{
+
+				if (ev.type == SDL_QUIT)
+					isRunning = false;
+			}
 		}
-		else {
-			continue;
+
+		//redraw circle objects, first as black and then with a new size and colour
+		//is there a better way to do all this?
+		while (isRunning) {
+			for (int i = 0; i < 20; i++) {
+				maxCirclesDisplayed = true;
+				SDL_Delay(fw.getRandomNumber(100, 1000));
+				circles[i].drawCircle(fw, maxCirclesDisplayed);
+				circles[i].setSizeOfCircle(fw);
+				maxCirclesDisplayed = false;
+				circles[i].drawCircle(fw, maxCirclesDisplayed);
+
+				while (SDL_PollEvent(&ev) != 0)					//hate having this twice. Make into a function? Figure out a way to redraw circles without this much nested looping? 
+				{
+
+					if (ev.type == SDL_QUIT)
+						isRunning = false;
+				}
+			}
 		}
 	
+
+		
 	}
+	
 
 	return 0;
 

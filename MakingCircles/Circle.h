@@ -9,6 +9,7 @@ class Circle {
 public:
 	Circle() {}
 
+	//do I really need to keep this?
 	Circle(int centerX, int centerY, int radius){
 	
 		m_centerX = centerX;
@@ -17,10 +18,15 @@ public:
 
 	}
 
-	void drawCircle(Framework& fw)
+	//draw circle onto screen using midpoint algorithm
+	void drawCircle(Framework& fw, bool maxCirclesDisplayed)
 	{
-
-		setRandomCircleColour(fw);
+		if (maxCirclesDisplayed == false) {
+			setRandomCircleColour(fw);
+		}
+		if (maxCirclesDisplayed == true) {
+			setCircleColourToBlack(fw);
+		}
 		SDL_SetRenderDrawBlendMode(fw.renderer, SDL_BLENDMODE_BLEND);
 
 		const int32_t diameter = (m_radius * 2);
@@ -60,6 +66,11 @@ public:
 		SDL_RenderPresent(fw.renderer);
 	}
 
+	void setSizeOfCircle(Framework& fw) {
+		m_centerX = fw.getRandomNumber(10, 630);
+		m_centerY = fw.getRandomNumber(10, 630);
+		m_radius = fw.getRandomNumber(20, 200);
+	}
 
 private:
 
@@ -70,6 +81,11 @@ private:
 		int green = fw.getRandomNumber(0, 255);
 
 		return (SDL_SetRenderDrawColor(fw.renderer, red, blue, green, 255));
+	}
+
+	int setCircleColourToBlack(Framework& fw) {
+
+		return (SDL_SetRenderDrawColor(fw.renderer, 0, 0, 0, 255));
 	}
 
 private:
